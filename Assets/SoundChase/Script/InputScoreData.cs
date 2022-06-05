@@ -15,8 +15,7 @@ public class InputScoreData
 
     public InputScoreData(string importScoreDataName)
     {
-        TextAsset textAsset = new TextAsset();
-        textAsset = Resources.Load($"ScoreData/{importScoreDataName}", typeof(TextAsset)) as TextAsset;
+        var textAsset = Resources.Load($"ScoreData/{importScoreDataName}", typeof(TextAsset)) as TextAsset;
 
         if (textAsset == null)
         {

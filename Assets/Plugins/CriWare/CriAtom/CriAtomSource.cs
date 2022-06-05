@@ -583,7 +583,7 @@ public class CriAtomSource : CriMonoBehaviour
 	protected virtual void InternalInitialize()
 	{
 		CriAtomPlugin.InitializeLibrary();
-		this.player = new CriAtomExPlayer();
+        this.player = new CriAtomExPlayer(true);
 		this.source = new CriAtomEx3dSource(randomPositionListMaxLength:this.randomPositionListMaxLength);
 		this.initialized = true;
 	}

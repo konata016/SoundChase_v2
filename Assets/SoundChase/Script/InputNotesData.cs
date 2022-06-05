@@ -14,8 +14,7 @@ public class InputNotesData
 
     public InputNotesData(string importNotesDataName)
     {
-        TextAsset textAsset = new TextAsset();
-        textAsset = Resources.Load($"NotesData/{importNotesDataName}", typeof(TextAsset)) as TextAsset;
+        var textAsset = Resources.Load($"NotesData/{importNotesDataName}", typeof(TextAsset)) as TextAsset;
 
         if (textAsset == null)
         {
@@ -31,7 +30,7 @@ public class InputNotesData
         var notesDataTexts = textAsset.text;
         var notesData = notesDataTexts.Split('\n');
 
-        NotesData[] notesDatas = new NotesData[notesData.Length - 1];
+        var notesDatas = new NotesData[notesData.Length - 1];
 
         for (int i = 0; i < notesData.Length - 1; i++)
         {

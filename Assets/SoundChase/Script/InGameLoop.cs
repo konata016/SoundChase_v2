@@ -19,14 +19,12 @@ public class InGameLoop : MonoBehaviour
 
     public float time;
 
-    private InputNotesData inputNotesData;
-
     private float speed => notesRoot.localScale.z;
 
     // Start is called before the first frame update
     void Start()
     {
-        inputNotesData = new InputNotesData("test");
+        var inputNotesData = new InputNotesData("test");
         var notesDatas = inputNotesData.NotesDatas;
 
         for (int i = 0; i < notesDatas.Length; i++)

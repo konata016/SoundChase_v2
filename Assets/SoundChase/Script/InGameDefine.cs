@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class InGameDefine
 {
     public static readonly float NotesShowTime = 3;
@@ -13,4 +15,55 @@ public class InGameDefine
     public static readonly float FallNotesFixHitTime = 0.02f;
 
     public static readonly float TechnicNotesFixHitTime = 0.1f;
+
+    public static readonly string NotesTagName = "Notes";
+
+    private static Camera mainCamera;
+    public static Camera MainCamera => mainCamera ?? Camera.main;
+}
+
+public class Calculation
+{
+    /// <summary>
+    /// 拍子
+    /// 
+    /// rhythm: 拍子数
+    /// </summary>
+    public static float GetBeat(int rhythm)
+    {
+        return 4f / rhythm;
+    }
+
+    /// <summary>
+    /// 1小節の時間
+    /// 
+    /// rhythm: 拍子数
+    /// bpm:    曲の速さ
+    /// </summary>
+    public static float GetBarTime(int rhythm, int bpm)
+    {
+        return (float)rhythm * 60 / (float)bpm;
+    }
+
+    /// <summary>
+    /// 残りの小節数
+    /// 
+    /// time:   現在の時間
+    /// rhythm: 拍子数
+    /// bpm:    曲の速さ
+    /// </summary>
+    public static int GetMaxBarCount(float time, int rhythm, int bpm)
+    {
+        return (int)(time / (60 * (float)rhythm / (float)bpm));
+    }
+
+    public static float MsToS(long ms)
+    {
+        return ms * 0.001f;
+    }
+
+    public static long SToMs(float s)
+    {
+        return (long)(s * 1000f);
+    }
 }
