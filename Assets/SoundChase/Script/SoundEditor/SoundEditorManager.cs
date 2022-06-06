@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SoundEditor;
@@ -25,6 +23,8 @@ public class SoundEditorManager : MonoBehaviour
 
     [SerializeField] private BGMSoundController.SoundName bgmName;
 
+    [SerializeField] private string importDataName;
+
     [SerializeField] private string exportDataName;
 
     private bool isPaused;
@@ -49,6 +49,8 @@ public class SoundEditorManager : MonoBehaviour
             onClickScoreDataExportButton);
 
         seekBar.maxValue = bgmEndTime;
+
+        notesEditController.ImportNotesData(importDataName);
     }
 
     private void Start()

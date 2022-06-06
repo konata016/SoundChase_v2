@@ -10,7 +10,7 @@ public class InputNotesData
         LanePositionNumber
     }
 
-    public readonly NotesData[] NotesDatas;
+    public readonly NotesData[] NotesDataArr;
 
     public InputNotesData(string importNotesDataName)
     {
@@ -22,7 +22,7 @@ public class InputNotesData
             return;
         }
 
-        NotesDatas = getNotesDatas(textAsset);
+        NotesDataArr = getNotesDatas(textAsset);
     }
 
     private NotesData[] getNotesDatas(TextAsset textAsset)

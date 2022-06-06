@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace SoundEditor
@@ -7,6 +6,8 @@ namespace SoundEditor
     public class NotesEditController : MonoBehaviour
     {
         [SerializeField] private SoundEditorNotes soundEditorNotes;
+
+        [SerializeField] private SoundEditorScoreInput scoreInput;
 
         private NotesData.NotesType selectedNotesType;
 
@@ -29,6 +30,12 @@ namespace SoundEditor
                 onLeftMouseButtonHold,
                 onRightMouseButtonDown);
 
+            scoreInput.Initialize(
+                editorHorizontalLineHeight,
+                maxHorizontalLaneCount,
+                soundEditorNotes,
+                transform);
+
             this.editorHorizontalLineHeight = editorHorizontalLineHeight;
             this.maxHorizontalLaneCount = maxHorizontalLaneCount;
         }
@@ -36,6 +43,16 @@ namespace SoundEditor
         public void SetNotesType(NotesData.NotesType type)
         {
             selectedNotesType = type;
+        }
+
+        public void ImportNotesData(string importNotesDataName)
+        {
+            if (String.IsNullOrEmpty(importNotesDataName))
+            {
+                return;
+            }
+
+            scoreInput.CreateSoundEditorNotes(importNotesDataName, notesDepth);
         }
 
         private void onLeftMouseButtonDown(Vector2 hitRayPosition)

@@ -25,7 +25,7 @@ public class InGameLoop : MonoBehaviour
     void Start()
     {
         var inputNotesData = new InputNotesData("test");
-        var notesDatas = inputNotesData.NotesDatas;
+        var notesDatas = inputNotesData.NotesDataArr;
 
         for (int i = 0; i < notesDatas.Length; i++)
         {

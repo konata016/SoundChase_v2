@@ -432,6 +432,7 @@ MonoBehaviour:
   buttonController: {fileID: 369517022}
   seekBar: {fileID: 2070800098}
   bgmName: 0
+  importDataName: aaa
   exportDataName: aaa
 --- !u!4 &310256557
 Transform:
@@ -482,6 +483,7 @@ GameObject:
   m_Component:
   - component: {fileID: 359640203}
   - component: {fileID: 359640202}
+  - component: {fileID: 359640204}
   m_Layer: 0
   m_Name: NotesEditController
   m_TagString: Untagged
@@ -502,6 +504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEditorNotes: {fileID: 3480010318967457157, guid: 6499933bb0a65824895e3dfa21da6668, type: 3}
+  scoreInput: {fileID: 359640204}
 --- !u!4 &359640203
 Transform:
   m_ObjectHideFlags: 0
@@ -516,6 +519,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &359640204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359640201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8787045b0720b45b2d7650f9baa71b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &369517019
 GameObject:
   m_ObjectHideFlags: 0
