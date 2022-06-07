@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   se: {fileID: 2170988797001951729}
   bgm: {fileID: 7738998210605813378}
+  defaultVolume: 0
 --- !u!114 &2170988797001951729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,11 +233,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f529aa944b914449d62b8c40f188fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acfFile: SoundChaseBGM.acf
+  acfFile: SoundChaseSound.acf
   cueSheets:
-  - name: CueSheet_0
-    acbFile: CueSheet_0.acb
-    awbFile: CueSheet_0.awb
+  - name: InGameBGM
+    acbFile: InGameBGM.acb
+    awbFile: 
+    loaderStatus: 0
+  - name: SE
+    acbFile: SE.acb
+    awbFile: 
     loaderStatus: 0
   dspBusSetting: 
   dontDestroyOnLoad: 1

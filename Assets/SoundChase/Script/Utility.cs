@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Utility
 {
@@ -10,7 +9,7 @@ public class Utility
         return (min + max) * 0.5f;
     }
 
-    public static T TryConversionStringToEnum<T>(string text) where T : struct
+    public static T TryConversionStringToEnum<T>(string text) where T : struct, Enum
     {
         if (!Enum.TryParse(text, out T word) || !Enum.IsDefined(typeof(T), word))
         {
@@ -18,6 +17,53 @@ public class Utility
         }
 
         return word;
+    }
+}
+
+public static class TransformExtension
+{
+    public static void AccessAllChildComponent<T>(
+        this Transform transform,
+        Action<T> onAccessedComponent)
+    {
+        for (var i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i);
+            var component = child.GetComponent<T>();
+            onAccessedComponent?.Invoke(component);
+        }
+    }
+}
+
+public static class ToggleExtension
+{
+    /// <summary>
+    /// ƒ`ƒFƒbƒN•ÏXˆ—
+    /// (Action“o˜^‚ÉRemoveAllListeners‚ªŒÄ‚Î‚ê‚½Œã‚É“o˜^‚³‚ê‚é)
+    /// </summary>
+    public static void OnValueChanged(
+        this Toggle toggle,
+        Action<bool> onValueChanged)
+    {
+        toggle.onValueChanged.RemoveAllListeners();
+        toggle.onValueChanged.AddListener((isOn) => onValueChanged(isOn));
+    }
+
+    /// <summary>
+    /// ƒ`ƒFƒbƒNˆ—
+    /// (Action“o˜^‚ÉRemoveAllListeners‚ªŒÄ‚Î‚ê‚½Œã‚É“o˜^‚³‚ê‚é)
+    /// </summary>
+    public static void OnSelected(
+        this Toggle toggle,
+        Action onSelected)
+    {
+        toggle.OnValueChanged((isOn) =>
+        {
+            if (isOn)
+            {
+                onSelected?.Invoke();
+            }
+        });
     }
 }
 

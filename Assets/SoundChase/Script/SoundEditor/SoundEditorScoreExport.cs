@@ -13,13 +13,8 @@ namespace SoundEditor
         {
             var dataList = new List<string>();
 
-            for (var i = 0; i < soundEditorNotesRoot.childCount; i++)
-            {
-                var child = soundEditorNotesRoot.GetChild(i);
-                var soundEditorNotes = child.GetComponent<SoundEditorNotes>();
-
-                dataList.Add(getData(soundEditorNotes.GetNotesData()));
-            }
+            soundEditorNotesRoot.AccessAllChildComponent<SoundEditorNotes>(
+                (notes) => { dataList.Add(getData(notes.GetNotesData())); });
 
             var filePath = $"Assets/SoundChase/Resources/NotesData/{fileName}.json";
             File.WriteAllLines(filePath, dataList);

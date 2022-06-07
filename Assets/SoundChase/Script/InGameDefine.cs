@@ -20,6 +20,19 @@ public class InGameDefine
 
     private static Camera mainCamera;
     public static Camera MainCamera => mainCamera ?? Camera.main;
+
+    public static Color GetNotesSymbolColor(NotesData.NotesType type)
+    {
+        switch (type)
+        {
+            case NotesData.NotesType.Fall: return Color.gray;
+            case NotesData.NotesType.JustDodge: return Color.blue;
+            case NotesData.NotesType.Technic: return Color.yellow;
+            case NotesData.NotesType.Point: return Color.red;
+        }
+
+        return Color.white;
+    }
 }
 
 public class Calculation

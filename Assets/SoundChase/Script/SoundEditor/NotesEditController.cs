@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SoundEditor
 {
@@ -8,6 +9,8 @@ namespace SoundEditor
         [SerializeField] private SoundEditorNotes soundEditorNotes;
 
         [SerializeField] private SoundEditorScoreInput scoreInput;
+
+        [SerializeField] private Toggle sePreviewToggle;
 
         private NotesData.NotesType selectedNotesType;
 
@@ -38,6 +41,8 @@ namespace SoundEditor
 
             this.editorHorizontalLineHeight = editorHorizontalLineHeight;
             this.maxHorizontalLaneCount = maxHorizontalLaneCount;
+
+            sePreviewToggle.OnValueChanged((isOn) => onSePreviewToggle(isOn));
         }
 
         public void SetNotesType(NotesData.NotesType type)
@@ -156,6 +161,15 @@ namespace SoundEditor
             }
 
             return 0;
+        }
+
+        private void onSePreviewToggle(bool isPreview)
+        {
+            transform.AccessAllChildComponent<SoundEditorNotesSePreviewController>(
+                (sePreview) =>
+                {
+                    sePreview.enabled = isPreview;
+                });
         }
     }
 }

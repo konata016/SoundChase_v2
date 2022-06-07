@@ -10,12 +10,12 @@ public class SoundTest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            soundManager.Play(SESoundController.SoundName.Ball);
+            //soundManager.Play(SESoundController.SoundName.Ball);
         } 
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            soundManager.Play(SESoundController.SoundName.BallLost);
+            //soundManager.Play(SESoundController.SoundName.BallLost);
         }
     }
 

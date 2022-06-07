@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,18 +8,14 @@ namespace SoundEditor
     {
         [SerializeField] private Toggle toggle;
 
+        [SerializeField] private Image lineImage;
+
         [SerializeField] private NotesData.NotesType notesType;
 
         public void Initialize(Action<NotesData.NotesType> onSelect)
         {
-            toggle.onValueChanged.RemoveAllListeners();
-            toggle.onValueChanged.AddListener((x) =>
-            {
-                if (toggle.isOn)
-                {
-                    onSelect?.Invoke(notesType);
-                }
-            });
+            toggle.OnSelected(() => onSelect?.Invoke(notesType));
+            lineImage.color = InGameDefine.GetNotesSymbolColor(notesType);
         }
 
         public void Select()
