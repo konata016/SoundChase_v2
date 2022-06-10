@@ -21,6 +21,14 @@ public class InGameDefine
     private static Camera mainCamera;
     public static Camera MainCamera => mainCamera ?? Camera.main;
 
+    public static string NotesDataSaveLocationPath(string dataName) =>
+        $"{ResourcesFolderPath}/Data/NotesData/{dataName}.json";
+
+    public static string ScoreDataSaveLocationPath(string dataName) =>
+         $"{ResourcesFolderPath}/Data/ScoreData/{dataName}.json";
+
+    private static string ResourcesFolderPath => $"{Application.dataPath}/SoundChase/Resources";
+
     public static Color GetNotesSymbolColor(NotesData.NotesType type)
     {
         switch (type)

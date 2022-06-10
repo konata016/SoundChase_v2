@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +20,80 @@ public class Utility
         }
 
         return word;
+    }
+}
+
+public static class JsonUtilityExtension
+{
+    [Serializable]
+    private struct JsonData<T>
+    {
+        [SerializeField]
+        private T[] arr;
+        public T[] Arr => arr;
+
+        public JsonData(IEnumerable<T> data)
+        {
+            arr = data.ToArray();
+        }
+    }
+
+    public static T[] ImportArr<T>(string dataPath)
+    {
+        var path = ImportSaveLocationPath(dataPath);
+        var asset = $"{Resources.Load<TextAsset>(path)}";
+
+        if (String.IsNullOrEmpty(asset))
+        {
+            Debug.LogError($"ファイルが存在しません！{path}");
+            return null;
+        }
+
+        var data = JsonUtility.FromJson<JsonData<T>>(asset);
+        return data.Arr;
+    }
+
+    public static T Import<T>(string dataPath)
+    {
+        var path = ImportSaveLocationPath(dataPath);
+        var asset = $"{Resources.Load<TextAsset>(path)}";
+
+        if (String.IsNullOrEmpty(asset))
+        {
+            Debug.LogError($"ファイルが存在しません！{path}");
+            return default;
+        }
+
+        return JsonUtility.FromJson<T>(asset);
+    }
+
+    public static void ExportArr<T>(IEnumerable<T> data, string dataPath, bool prettyPrint = false)
+    {
+        var json = JsonUtility.ToJson(new JsonData<T>(data), prettyPrint);
+        var writer = new StreamWriter(dataPath, false);
+        Debug.Log(json);
+        writer.Write(json);
+        writer.Flush();
+        writer.Close();
+    }
+
+    public static void Export<T>(T data, string dataPath, bool prettyPrint = false)
+    {
+        var json = JsonUtility.ToJson(data, prettyPrint);
+        var writer = new StreamWriter(dataPath, false);
+        writer.Write(json);
+        Debug.Log(json);
+        writer.Flush();
+        writer.Close();
+    }
+
+    private static string ImportSaveLocationPath(string dataPath)
+    {
+        const string Key = "Resources/";
+        const string Extension = ".json";
+
+        var adjustedPath = dataPath.Substring(dataPath.IndexOf(Key) + Key.Length);
+        return adjustedPath.Remove(adjustedPath.IndexOf(Extension));
     }
 }
 

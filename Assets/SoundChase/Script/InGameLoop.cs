@@ -22,14 +22,14 @@ public class InGameLoop : MonoBehaviour
     private float speed => notesRoot.localScale.z;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        var inputNotesData = new InputNotesData("test");
-        var notesDatas = inputNotesData.NotesDataArr;
+        var path = InGameDefine.NotesDataSaveLocationPath("test2");
+        var notesDataArr = JsonUtilityExtension.ImportArr<NotesData>(path);
 
-        for (int i = 0; i < notesDatas.Length; i++)
+        for (int i = 0; i < notesDataArr.Length; i++)
         {
-            createNotes(notesDatas[i]);
+            createNotes(notesDataArr[i]);
         }
 
         player.Initialize(0, 4);
@@ -37,7 +37,7 @@ public class InGameLoop : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         addTime();
         var pos = notesRoot.localPosition;

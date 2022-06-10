@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using SoundEditor;
-
+using System.Collections.Generic;
 
 public class SoundEditorManager : MonoBehaviour
 {
@@ -12,8 +12,6 @@ public class SoundEditorManager : MonoBehaviour
     [SerializeField] private PointerManager pointerManager;
 
     [SerializeField] private NotesEditController notesEditController;
-
-    [SerializeField] private SoundEditorScoreExport scoreExport;
 
     [SerializeField] private SoundEditorToggleController toggleController;
 
@@ -86,12 +84,21 @@ public class SoundEditorManager : MonoBehaviour
     private void onClickNotesDataExportButton()
     {
         Debug.Log("ノーツデータの書き出し");
-        scoreExport.ExportNotesData(exportDataName);
+
+        var dataList = new List<NotesData>();
+        var soundEditorNotesRoot = notesEditController.transform;
+        var filePath = InGameDefine.NotesDataSaveLocationPath(exportDataName);
+
+        soundEditorNotesRoot.AccessAllChildComponent<SoundEditorNotes>(
+            (notes) => { dataList.Add(notes.GetNotesData()); });
+
+        JsonUtilityExtension.ExportArr(dataList, filePath, false);
     }
 
     private void onClickScoreDataExportButton()
     {
         Debug.Log("楽曲データの書き出し");
-        scoreExport.ExportScoreData(scoreCreation.SoundData, exportDataName);
+        var filePath = InGameDefine.ScoreDataSaveLocationPath(exportDataName);
+        JsonUtilityExtension.Export(scoreCreation.SoundData, filePath, false);
     }
 }

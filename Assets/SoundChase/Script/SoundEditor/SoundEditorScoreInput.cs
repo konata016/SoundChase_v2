@@ -30,12 +30,24 @@ namespace SoundEditor
             string importNotesDataName,
             float depth)
         {
-            var data = new InputNotesData(importNotesDataName);
+            var path = InGameDefine.NotesDataSaveLocationPath(importNotesDataName);
+            var data = JsonUtilityExtension.ImportArr<NotesData>(path);
+
+            // json形式でない場合のjsonを読み込む場合はこれを復活させる
+            //var a = new InputNotesData(importNotesDataName);
+            //var data = a.NotesDataArr;
+
+            if (data == null)
+            {
+                Debug.LogError("データが存在しないためノーツの配置を復元出来ませんでした！");
+                return;
+            }
+
             var height = editorHorizontalLineHeight / maxHorizontalLaneCount;
 
-            for (var i = 0; i < data.NotesDataArr.Length; i++)
+            for (var i = 0; i < data.Length; i++)
             {
-                var notesData = data.NotesDataArr[i];
+                var notesData = data[i];
                 var notes = Instantiate(soundEditorNotes, soundEditorNotesRoot);
 
                 var y = getPositionY(height, notesData.LanePositionNumber);

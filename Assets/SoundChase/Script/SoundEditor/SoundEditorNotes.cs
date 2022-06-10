@@ -83,13 +83,15 @@ namespace SoundEditor
         private void setupColliderSize()
         {
             var length = line.GetPosition(1).x - line.GetPosition(0).x;
+            var offsetX = length / 2;
 
             if (length == 0)
             {
-                length = 0.05f;
+                length = line.widthMultiplier;
+                offsetX = 0;
             }
 
-            collider.offset = new Vector2(length / 2, 0);
+            collider.offset = new Vector2(offsetX, 0);
             collider.size = new Vector2(length, colliderHeight);
         }
 

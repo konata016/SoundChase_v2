@@ -5,6 +5,8 @@ namespace SoundEditor
 {
     public class SoundEditorNotesSePreviewController : MonoBehaviour
     {
+        public NotesData.NotesType NotesType { get; private set; }
+
         private float hitStartTime;
 
         private float hitEndTime;
@@ -20,6 +22,7 @@ namespace SoundEditor
         {
             this.hitStartTime = hitStartTime;
             this.hitEndTime = hitEndTime;
+            NotesType = notesType;
 
             seName = GetSoundName(notesType);
             isPlayed = false;
@@ -45,6 +48,11 @@ namespace SoundEditor
 
         private bool isTiming(float time, float fixTiming)
         {
+            if (!SoundManager.Instance.IsPlayingBGM)
+            {
+                return false;
+            }
+
             return time > hitStartTime - fixTiming && time < hitEndTime + fixTiming;
         }
 

@@ -168,7 +168,10 @@ namespace SoundEditor
             transform.AccessAllChildComponent<SoundEditorNotesSePreviewController>(
                 (sePreview) =>
                 {
-                    sePreview.enabled = isPreview;
+                    if (sePreview.NotesType != NotesData.NotesType.Fall)
+                    {
+                        sePreview.enabled = isPreview;
+                    }
                 });
         }
     }

@@ -12,6 +12,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     public bool IsPausedBGM => bgm.IsPaused();
 
+    public bool IsPlayingSE => se.IsPlaying();
+
     public bool IsPlayingBGM => bgm.IsPlaying();
 
     private void Awake()

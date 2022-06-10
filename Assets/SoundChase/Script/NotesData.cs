@@ -1,3 +1,7 @@
+using System;
+using UnityEngine;
+
+[Serializable]
 public class NotesData
 {
     public enum NotesType
@@ -8,13 +12,21 @@ public class NotesData
         Point
     }
 
-    public readonly NotesType Type;
+    [SerializeField]
+    private NotesType type;
+    public NotesType Type => type;
 
-    public readonly int LanePositionNumber;
+    [SerializeField]
+    private int lanePositionNumber;
+    public int LanePositionNumber => lanePositionNumber;
 
-    public readonly float HitStartTime;
+    [SerializeField]
+    private float hitStartTime;
+    public float HitStartTime => hitStartTime;
 
-    public readonly float HitEndTime;
+    [SerializeField]
+    private float hitEndTime;
+    public float HitEndTime => hitEndTime;
 
     public NotesData(
         NotesType notesType,
@@ -22,9 +34,9 @@ public class NotesData
         float hitStartTime,
         float hitEndTime)
     {
-        Type = notesType;
-        LanePositionNumber = lanePositionNumber;
-        HitStartTime = hitStartTime;
-        HitEndTime = hitEndTime;
+        type = notesType;
+        this.lanePositionNumber = lanePositionNumber;
+        this.hitStartTime = hitStartTime;
+        this.hitEndTime = hitEndTime;
     }
 }

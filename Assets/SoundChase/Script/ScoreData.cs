@@ -1,14 +1,28 @@
+using System;
+using UnityEngine;
+
+[Serializable]
 public class ScoreData
 {
-    public readonly string SongName;
+    [SerializeField]
+    private string songName;
+    public string SongName => songName;
 
-    public readonly float SongLength;
+    [SerializeField]
+    private float songLength;
+    public float SongLength => songLength;
 
-    public readonly int MaxBarCount;
+    [SerializeField]
+    private int maxBarCount;
+    public int MaxBarCount => maxBarCount;
 
-    public readonly int Rhythm;
+    [SerializeField]
+    private int rhythm;
+    public int Rhythm => rhythm;
 
-    public readonly int Bpm;
+    [SerializeField]
+    private int bpm;
+    public int Bpm => bpm;
 
     public ScoreData(
         string songName,
@@ -17,10 +31,10 @@ public class ScoreData
         int rhythm,
         int bpm)
     {
-        SongName = songName;
-        SongLength = songLength;
-        MaxBarCount = maxBarCount;
-        Rhythm = rhythm;
-        Bpm = bpm;
+        this.songName = songName;
+        this.songLength = songLength;
+        this.maxBarCount = maxBarCount;
+        this.rhythm = rhythm;
+        this.bpm = bpm;
     }
 }

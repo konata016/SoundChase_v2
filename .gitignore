@@ -65,3 +65,6 @@ Assets/StreamingAssets.meta
 *SESoundController.cs.meta
 *BGMSoundController.cs
 *BGMSoundController.cs.meta
+
+Assets/SoundChase/Resources/Data/ScoreData/
+Assets/SoundChase/Resources/Data/ScoreData.meta
