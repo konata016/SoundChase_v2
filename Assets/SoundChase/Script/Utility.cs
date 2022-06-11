@@ -123,7 +123,7 @@ public static class ToggleExtension
         Action<bool> onValueChanged)
     {
         toggle.onValueChanged.RemoveAllListeners();
-        toggle.onValueChanged.AddListener((isOn) => onValueChanged(isOn));
+        toggle.onValueChanged.AddListener((isOn) => onValueChanged?.Invoke(isOn));
     }
 
     /// <summary>
