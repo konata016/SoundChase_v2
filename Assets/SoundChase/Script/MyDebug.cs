@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace SC {
 
-    public class Debug : MonoBehaviour
+    public class Debug
     {
         public static void Log(string message)
         {
 #if UNITY_EDITOR
-            //UnityEngine.Debug.Log(message);
+            //Debug.Log(message);
 # endif
         }
 
         public static void LogError(string message)
         {
 #if UNITY_EDITOR
-            //UnityEngine.Debug.LogError(message);
+            //Debug.LogError(message);
 # endif
         }
     }

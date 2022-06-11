@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class TestPlayer : PlayerBase
+public sealed class TestPlayer : PlayerBase
 {
-    sealed protected override void onMoveLeft()
+    protected override void onMoveLeft()
     {
         StartCoroutine(Move());
     }
 
-    sealed protected override void onMoveRight()
+    protected override void onMoveRight()
     {
         StartCoroutine(Move());
     }
 
-    sealed protected override void onHitFallNotes()
+    protected override void onHitFallNotes()
     {
         SC.Debug.Log($"ダメージ");
     }
 
-    sealed protected override void onHitJustDodgeNotes()
+    protected override void onHitJustDodgeNotes()
     {
         if (!isAnyAction)
         {
@@ -29,7 +29,7 @@ public class TestPlayer : PlayerBase
         }
     }
 
-    sealed protected override void onHitTechnicNotes()
+    protected override void onHitTechnicNotes()
     {
         if (!isAnyAction)
         {
@@ -38,7 +38,7 @@ public class TestPlayer : PlayerBase
         }
     }
 
-    sealed protected override void onHitPointNotes()
+    protected override void onHitPointNotes()
     {
         SC.Debug.Log($"ポイント");
     }

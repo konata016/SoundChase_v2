@@ -32,7 +32,7 @@ public class InGameLoop : MonoBehaviour
             createNotes(notesDataArr[i]);
         }
 
-        player.Initialize(0, 4);
+        player.Initialize(new InGameSeData(), 0, 4);
         playerInputController.Initialize(player, 0.035f, 0.032f);
     }
 

@@ -9,6 +9,6 @@ public class PlayerController : MonoBehaviour
 
     public void Initialize()
     {
-        player.Initialize(0, 4);
+        player.Initialize(new InGameSeData(), 0, 4);
     }
 }

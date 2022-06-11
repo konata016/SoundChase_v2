@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour, IRhythmGame, IInputKey
 {
+    protected bool isAnyAction { get; private set; }
+
     private int minLaneMoveLimit;
 
     private int maxLaneMoveLimit;
 
     private int currentLanePositionNumber;
 
-    protected float horizontalPosition => currentLanePositionNumber * InGameDefine.FixLaneSpace;
+    private InGameSeData seData;
 
-    protected bool isAnyAction { get; private set; }
+    protected float horizontalPosition => currentLanePositionNumber * InGameDefine.FixLaneSpace;
 
     protected virtual void initialize() { }
 
@@ -37,9 +39,13 @@ public class PlayerBase : MonoBehaviour, IRhythmGame, IInputKey
 
     protected virtual void onHitPointNotes() { }
 
-    public void Initialize(int minLaneMoveLimit, int maxLaneMoveLimit)
+    public void Initialize(
+        InGameSeData seData,
+        int minLaneMoveLimit,
+        int maxLaneMoveLimit)
     {
         initialize();
+        this.seData = seData;
         this.minLaneMoveLimit = minLaneMoveLimit;
         this.maxLaneMoveLimit = maxLaneMoveLimit;
     }
@@ -49,16 +55,26 @@ public class PlayerBase : MonoBehaviour, IRhythmGame, IInputKey
         switch (notesType)
         {
             case NotesData.NotesType.Fall:
-                onHitNotes(notesLanePositionNumber, onHitFallNotes);
+                onHitNotes(notesLanePositionNumber, () =>
+                {
+                    //SoundManager.Instance.PlaySE(seData.HittingFall);
+                    onHitFallNotes();
+                });
                 break;
             case NotesData.NotesType.JustDodge:
-                onHitNotes(notesLanePositionNumber, onHitJustDodgeNotes);
+                onHitNotes(notesLanePositionNumber, () =>
+                {
+                    onHitJustDodgeNotes();
+                });
                 break;
             case NotesData.NotesType.Technic:
                 onHitTechnicNotes();
                 break;
             case NotesData.NotesType.Point:
-                onHitNotes(notesLanePositionNumber, onHitPointNotes);
+                onHitNotes(notesLanePositionNumber, () =>
+                {
+                    onHitPointNotes();
+                });
                 break;
         }
     }
