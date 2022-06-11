@@ -32,7 +32,7 @@ namespace SoundEditor
             bool isSePreview)
         {
             var path = InGameDefine.NotesDataSaveLocationPath(importNotesDataName);
-            var data = JsonUtilityExtension.ImportArr<NotesData>(path);
+            var data = JsonUtilityExtension.ImportArr<NotesData>(path, true);
 
             // jsonŒ`®‚Å‚È‚¢ê‡‚Ìjson‚ğ“Ç‚İ‚Şê‡‚Í‚±‚ê‚ğ•œŠˆ‚³‚¹‚é
             //var a = new InputNotesData(importNotesDataName);
