@@ -19,16 +19,20 @@ namespace SoundEditor
 
         private Action<Collider2D> onRightMouseButtonDown;
 
+        private Action<Collider2D> onRightMouseButtonHold;
+
         public void Initialize(
             Action<Vector2> onLeftMouseButtonDown = null,
             Action<Vector2> onLeftMouseButtonUp = null,
             Action<Vector2> onLeftMouseButtonHold = null,
-            Action<Collider2D> onRightMouseButtonDown = null)
+            Action<Collider2D> onRightMouseButtonDown = null,
+            Action<Collider2D> onRightMouseButtonHold = null)
         {
             this.onLeftMouseButtonDown = onLeftMouseButtonDown;
             this.onLeftMouseButtonUp = onLeftMouseButtonUp;
             this.onLeftMouseButtonHold = onLeftMouseButtonHold;
             this.onRightMouseButtonDown = onRightMouseButtonDown;
+            this.onRightMouseButtonHold = onRightMouseButtonHold;
         }
 
         public void Update()
@@ -41,6 +45,11 @@ namespace SoundEditor
             if (Input.GetMouseButtonDown(1) && !isLeftMouseButtonHold)
             {
                 onRightMouseButtonDown?.Invoke(collider);
+                return;
+            }
+            else if (Input.GetMouseButton(1) && !isLeftMouseButtonHold)
+            {
+                onRightMouseButtonHold?.Invoke(collider);
                 return;
             }
 
