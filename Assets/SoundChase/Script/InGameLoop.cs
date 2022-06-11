@@ -17,6 +17,9 @@ public class InGameLoop : MonoBehaviour
     [SerializeField]
     private PlayerBase player;
 
+    [SerializeField]
+    private string inputDataName = "Test2";
+
     public float time;
 
     private float speed => notesRoot.localScale.z;
@@ -24,7 +27,7 @@ public class InGameLoop : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        var path = InGameDefine.NotesDataSaveLocationPath("test2");
+        var path = InGameDefine.NotesDataSaveLocationPath(inputDataName);
         var notesDataArr = JsonUtilityExtension.ImportArr<NotesData>(path);
 
         for (int i = 0; i < notesDataArr.Length; i++)

@@ -38,14 +38,15 @@ public static class JsonUtilityExtension
         }
     }
 
-    public static T[] ImportArr<T>(string dataPath)
+    public static T[] ImportArr<T>(string dataPath, bool isStreamReader = false)
     {
-        var path = ImportSaveLocationPath(dataPath);
-        var asset = $"{Resources.Load<TextAsset>(path)}";
+        //var path = ImportSaveLocationPath(dataPath);
+        var asset = isStreamReader ? 
+            new StreamReader(dataPath).ReadToEnd() : $"{Resources.Load<TextAsset>(dataPath)}";
 
         if (String.IsNullOrEmpty(asset))
         {
-            Debug.LogError($"ファイルが存在しません！{path}");
+            Debug.LogError($"ファイルが存在しません！{dataPath}");
             return null;
         }
 
@@ -53,14 +54,15 @@ public static class JsonUtilityExtension
         return data.Arr;
     }
 
-    public static T Import<T>(string dataPath)
+    public static T Import<T>(string dataPath, bool isStreamReader = false)
     {
-        var path = ImportSaveLocationPath(dataPath);
-        var asset = $"{Resources.Load<TextAsset>(path)}";
+        //var path = ImportSaveLocationPath(dataPath);
+        var asset = isStreamReader ? 
+            new StreamReader(dataPath).ReadToEnd() : $"{Resources.Load<TextAsset>(dataPath)}";
 
         if (String.IsNullOrEmpty(asset))
         {
-            Debug.LogError($"ファイルが存在しません！{path}");
+            Debug.LogError($"ファイルが存在しません！{dataPath}");
             return default;
         }
 
