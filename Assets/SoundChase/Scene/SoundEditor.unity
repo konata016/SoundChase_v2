@@ -1357,7 +1357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d20a93b011a6994c9b3b59176bdd428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleGroup: {fileID: 0}
   soundEditorToggleArr:
   - {fileID: 399171538}
   - {fileID: 974954203}
@@ -2475,7 +2474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
