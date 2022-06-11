@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using SoundEditor;
 using System.Collections.Generic;
+using TMPro;
 
 public class SoundEditorManager : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class SoundEditorManager : MonoBehaviour
     [SerializeField] private SoundEditorToggleController toggleController;
 
     [SerializeField] private SoundEditorButtonController buttonController;
+
+    [SerializeField] private TextMeshProUGUI importDataNameText;
+
+    [SerializeField] private TextMeshProUGUI exportDataNameText;
 
     [SerializeField] private Slider seekBar;
 
@@ -49,11 +54,18 @@ public class SoundEditorManager : MonoBehaviour
         seekBar.maxValue = bgmEndTime;
 
         notesEditController.ImportNotesData(importDataName);
+
+        setDataName();
     }
 
     private void Start()
     {
         isPaused = true;
+    }
+
+    private void OnValidate()
+    {
+        setDataName();
     }
 
     private void Update()
@@ -100,5 +112,11 @@ public class SoundEditorManager : MonoBehaviour
         Debug.Log("楽曲データの書き出し");
         var filePath = InGameDefine.ScoreDataSaveLocationPath(exportDataName);
         JsonUtilityExtension.Export(scoreCreation.SoundData, filePath, false);
+    }
+
+    private void setDataName()
+    {
+        importDataNameText.text = $"Import: {importDataName}";
+        exportDataNameText.text = $"Export: {exportDataName}";
     }
 }
