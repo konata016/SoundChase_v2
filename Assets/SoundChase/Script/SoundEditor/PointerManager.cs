@@ -46,20 +46,14 @@ namespace SoundEditor
 
             if (collider != null)
             {
-                if (collider.tag == InGameDefine.NotesTagName)
+                if (collider.tag != InGameDefine.NotesTagName)
                 {
-                    return;
+                    hitRayObjectPosition = collider.transform.position;
+                    hitRayObjectPosition.y = pos.y;
                 }
-
-                hitRayObjectPosition = collider.transform.position;
-                hitRayObjectPosition.y = pos.y;
-            }
-            else
-            {
-                return;
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && collider != null)
             {
                 isLeftMouseButtonHold = true;
                 onLeftMouseButtonDown?.Invoke(hitRayObjectPosition);
