@@ -62,7 +62,10 @@ namespace SoundEditor
 
         private void onLeftMouseButtonDown(Vector2 hitRayPosition)
         {
-            var pos = position(hitRayPosition);
+            if (!tryGetPosition(hitRayPosition, out var pos))
+            {
+                return;
+            }
 
             currentNotes = createNotes();
             currentNotes.SetStartPosition(pos, notesDepth);
@@ -130,20 +133,28 @@ namespace SoundEditor
             currentNotes = null;
         }
 
-        private Vector2 position(Vector2 hitRayPosition)
+        private bool tryGetPosition(Vector2 hitRayPosition,out Vector2 position)
         {
             var y = Mathf.Clamp(hitRayPosition.y, 0, editorHorizontalLineHeight);
             var h = editorHorizontalLineHeight / maxHorizontalLaneCount;
+
+            if (y >= editorHorizontalLineHeight)
+            {
+                position = -Vector2.one;
+                return false;
+            }
 
             for (int i = 0; i < maxHorizontalLaneCount; i++)
             {
                 if (y > h * i && y <= h * (i + 1))
                 {
-                    return new Vector2(hitRayPosition.x, (h * i) + (h / 2));
+                    position = new Vector2(hitRayPosition.x, (h * i) + (h / 2));
+                    return true;
                 }
             }
 
-            return new Vector2(hitRayPosition.x, 0);
+            position = new Vector2(hitRayPosition.x, 0);
+            return true;
         }
 
         private int getLanePositionNumber(float hitRayPositionY)
