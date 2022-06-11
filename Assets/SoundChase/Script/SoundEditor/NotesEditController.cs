@@ -31,7 +31,8 @@ namespace SoundEditor
                 onLeftMouseButtonDown,
                 onLeftMouseButtonUp,
                 onLeftMouseButtonHold,
-                onRightMouseButtonDown);
+                onRightMouseButtonDown,
+                onRightMouseButtonHold);
 
             scoreInput.Initialize(
                 editorHorizontalLineHeight,
@@ -114,6 +115,11 @@ namespace SoundEditor
             }
 
             Destroy(collider.gameObject);
+        }
+
+        private void onRightMouseButtonHold(Collider2D collider)
+        {
+            onRightMouseButtonDown(collider);
         }
 
         private SoundEditorNotes createNotes()
