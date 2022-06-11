@@ -8,8 +8,6 @@ namespace SoundEditor
 {
     public class SoundEditorToggleController : MonoBehaviour
     {
-        [SerializeField] ToggleGroup toggleGroup;
-
         [SerializeField] SoundEditorToggle[] soundEditorToggleArr;
 
         public void Initialize(Action<NotesData.NotesType> onSelect)

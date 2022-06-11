@@ -57,7 +57,7 @@ namespace SoundEditor
                 return;
             }
 
-            scoreInput.CreateSoundEditorNotes(importNotesDataName, notesDepth);
+            scoreInput.CreateSoundEditorNotes(importNotesDataName, notesDepth, sePreviewToggle.isOn);
         }
 
         private void onLeftMouseButtonDown(Vector2 hitRayPosition)
@@ -118,7 +118,7 @@ namespace SoundEditor
             var notes = Instantiate(soundEditorNotes, transform);
 
             var h = editorHorizontalLineHeight / maxHorizontalLaneCount;
-            notes.Initialize(selectedNotesType, h);
+            notes.Initialize(selectedNotesType, h, sePreviewToggle.isOn);
 
             return notes;
         }
@@ -165,13 +165,10 @@ namespace SoundEditor
 
         private void onSePreviewToggle(bool isPreview)
         {
-            transform.AccessAllChildComponent<SoundEditorNotesSePreviewController>(
-                (sePreview) =>
+            transform.AccessAllChildComponent<SoundEditorNotes>(
+                (notes) =>
                 {
-                    if (sePreview.NotesType != NotesData.NotesType.Fall)
-                    {
-                        sePreview.enabled = isPreview;
-                    }
+                    notes.SetActiveSePreview(isPreview);
                 });
         }
     }

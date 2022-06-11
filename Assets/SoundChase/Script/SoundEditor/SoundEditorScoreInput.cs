@@ -28,7 +28,8 @@ namespace SoundEditor
 
         public void CreateSoundEditorNotes(
             string importNotesDataName,
-            float depth)
+            float depth,
+            bool isSePreview)
         {
             var path = InGameDefine.NotesDataSaveLocationPath(importNotesDataName);
             var data = JsonUtilityExtension.ImportArr<NotesData>(path);
@@ -54,7 +55,7 @@ namespace SoundEditor
                 var startPosition = new Vector2(notesData.HitStartTime, y);
                 var endPosition = new Vector2(notesData.HitEndTime, y);
 
-                notes.Initialize(notesData.Type, height);
+                notes.Initialize(notesData.Type, height, isSePreview);
                 notes.SetLanePositionNumber(notesData.LanePositionNumber);
                 notes.SetStartPosition(startPosition, depth);
                 notes.SetEndPosition(endPosition, depth);

@@ -20,7 +20,7 @@ namespace SoundEditor
 
         public float Height => line.GetPosition(0).y;
 
-        public void Initialize(NotesData.NotesType type, float colliderHeight)
+        public void Initialize(NotesData.NotesType type, float colliderHeight, bool isSePreview)
         {
             this.type = type;
             this.colliderHeight = colliderHeight;
@@ -28,6 +28,13 @@ namespace SoundEditor
             line.positionCount = 2;
 
             setColor();
+
+            SetActiveSePreview(isSePreview);
+        }
+
+        public void SetActiveSePreview(bool isSePreview)
+        {
+            notesSePreviewController.enabled = type == NotesData.NotesType.Fall ? false : isSePreview;
         }
 
         public NotesData GetNotesData()
