@@ -1,21 +1,23 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using SeName = SESoundController.SoundName;
 
 public class PlayerBase : MonoBehaviour, IRhythmGame, IInputKey
 {
+    public int CurrentLanePositionNumber { get; private set; }
+
     protected bool isAnyAction { get; private set; }
 
     private int minLaneMoveLimit;
 
     private int maxLaneMoveLimit;
 
-    private int currentLanePositionNumber;
-
     private InGameSeData seData;
 
-    protected float horizontalPosition => currentLanePositionNumber * InGameDefine.FixLaneSpace;
+    private Action onMove;
+
+    protected float horizontalPosition => CurrentLanePositionNumber * InGameDefine.FixLaneSpace;
 
     protected virtual void initialize() { }
 
@@ -31,13 +33,13 @@ public class PlayerBase : MonoBehaviour, IRhythmGame, IInputKey
 
     protected virtual void onMoveRight() { }
 
-    protected virtual void onHitFallNotes() { }
+    protected virtual bool onHitFallNotes() { return false; }
 
-    protected virtual void onHitJustDodgeNotes() { }
+    protected virtual bool onHitJustDodgeNotes() { return false; }
 
-    protected virtual void onHitTechnicNotes() { }
+    protected virtual bool onHitTechnicNotes() { return false; }
 
-    protected virtual void onHitPointNotes() { }
+    protected virtual bool onHitPointNotes() { return false; }
 
     public void Initialize(
         InGameSeData seData,
@@ -50,33 +52,21 @@ public class PlayerBase : MonoBehaviour, IRhythmGame, IInputKey
         this.maxLaneMoveLimit = maxLaneMoveLimit;
     }
 
-    public void OnHitNotes(NotesData.NotesType notesType, int notesLanePositionNumber)
+    public bool OnHitNotes(NotesData.NotesType notesType, int notesLanePositionNumber)
     {
         switch (notesType)
         {
             case NotesData.NotesType.Fall:
-                onHitNotes(notesLanePositionNumber, () =>
-                {
-                    //SoundManager.Instance.PlaySE(seData.HittingFall);
-                    onHitFallNotes();
-                });
-                break;
+                return isHitingNotes(seData.HittingFall, notesLanePositionNumber, onHitFallNotes);
             case NotesData.NotesType.JustDodge:
-                onHitNotes(notesLanePositionNumber, () =>
-                {
-                    onHitJustDodgeNotes();
-                });
-                break;
+                return isHitingNotes(seData.JustDodge, notesLanePositionNumber, onHitJustDodgeNotes);
             case NotesData.NotesType.Technic:
-                onHitTechnicNotes();
-                break;
+                return isHitingAllLaneNotes(seData.Technic, onHitTechnicNotes);
             case NotesData.NotesType.Point:
-                onHitNotes(notesLanePositionNumber, () =>
-                {
-                    onHitPointNotes();
-                });
-                break;
+                return isHitingNotes(seData.GettingPoint, notesLanePositionNumber, onHitPointNotes);
         }
+
+        return false;
     }
 
     public void OnPause()
@@ -97,45 +87,67 @@ public class PlayerBase : MonoBehaviour, IRhythmGame, IInputKey
     public void OnTap()
     {
         StartCoroutine(onAnyAction());
-        onTap();
+        onMove = ()=> { onTap(); };
     }
 
     public void OnLeft()
     {
-        if (currentLanePositionNumber > minLaneMoveLimit)
+        if (CurrentLanePositionNumber > minLaneMoveLimit)
         {
             StartCoroutine(onAnyAction());
-
-            currentLanePositionNumber--;
-            onMoveLeft();
+            onMove = () =>
+            {
+                  CurrentLanePositionNumber--;
+                  onMoveLeft();
+            };
         }
     }
 
     public void OnRight()
     {
-        if (currentLanePositionNumber < maxLaneMoveLimit)
+        if (CurrentLanePositionNumber < maxLaneMoveLimit)
         {
             StartCoroutine(onAnyAction());
-
-            currentLanePositionNumber++;
-            onMoveRight();
+            onMove = () =>
+            {
+                CurrentLanePositionNumber++;
+                onMoveRight();
+            };
         }
     }
 
-    private void onHitNotes(int notesLanePositionNumber, Action onHit)
+    private bool isHitingNotes(SeName seData, int notesLanePositionNumber, Func<bool> onHit)
     {
-        if(currentLanePositionNumber!= notesLanePositionNumber)
+        if (CurrentLanePositionNumber != notesLanePositionNumber)
         {
-            return;
+            return false;
         }
 
-        onHit?.Invoke();
+        if(onHit?.Invoke() ?? false)
+        {
+            SoundManager.Instance.PlaySE(seData);
+            return true;
+        }
+;
+        return false;
+    }
+
+    private bool isHitingAllLaneNotes(SeName seData, Func<bool> onHit)
+    {
+        if (onHit?.Invoke() ?? false)
+        {
+            SoundManager.Instance.PlaySE(seData);
+            return true;
+        }
+
+        return false;
     }
 
     private IEnumerator onAnyAction()
     {
         isAnyAction = true;
         yield return null;
+        onMove?.Invoke();
         isAnyAction = false;
     }
 }

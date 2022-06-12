@@ -61,7 +61,7 @@ public class PlayerInputController : MonoBehaviour, IDragHandler, IPointerDownHa
         dirType = DirectionType.None;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {

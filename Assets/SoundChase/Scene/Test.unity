@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 146167847}
   - component: {fileID: 146167846}
+  - component: {fileID: 146167848}
   m_Layer: 0
   m_Name: InGameManager
   m_TagString: Untagged
@@ -153,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInputController: {fileID: 2039452591}
+  beatObjectSetting: {fileID: 146167848}
   notesRoot: {fileID: 260180919}
   notesBases:
   - {fileID: 2646689004744256818, guid: f0fdfcafa341d454d96bfd65d5e403dc, type: 3}
@@ -160,7 +162,7 @@ MonoBehaviour:
   - {fileID: 3866785669386949596, guid: 910e45fc721fd5d45913e6c8c24e45a1, type: 3}
   - {fileID: 1302895920324573976, guid: 12ea67a16e6a7464fa993d70d238945b, type: 3}
   player: {fileID: 173958462}
-  time: 0
+  inputDataName: Test2
 --- !u!4 &146167847
 Transform:
   m_ObjectHideFlags: 0
@@ -175,6 +177,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &146167848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146167845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 960fd70508a2c2a40a96a7692262f667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &173958461
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -358,6 +372,10 @@ PrefabInstance:
     - target: {fileID: 1528969615370706198, guid: 4af3b6dbd48cc894f806465e8b0ae909, type: 3}
       propertyPath: m_Name
       value: CRISoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2256230282602691323, guid: 4af3b6dbd48cc894f806465e8b0ae909, type: 3}
+      propertyPath: defaultVolume
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6980922142365043810, guid: 4af3b6dbd48cc894f806465e8b0ae909, type: 3}
       propertyPath: m_RootOrder

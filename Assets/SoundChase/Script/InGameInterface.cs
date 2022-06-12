@@ -8,11 +8,20 @@ public interface IRhythmGame
     void OnDispose();
 }
 
+public interface IBeat
+{
+    int Beat { get; }
+
+    void OnBeat();
+}
+
 public interface INotes
 {
     NotesData.NotesType NotesType { get; }
 
     Range<float> FixHitTime { get; }
+
+    int LaneNumber { get; }
 
     void Initialize(float hitStartTime, float hitEndTime, int laneNumber);
 
@@ -22,7 +31,7 @@ public interface INotes
 
     void OnHideView();
 
-    void OnProcessing();
+    void OnProcessing(bool isHitPlayer);
 }
 
 // https://qiita.com/riekure/items/ab6b5deb391399944a15

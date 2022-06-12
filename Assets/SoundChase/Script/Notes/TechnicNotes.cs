@@ -5,12 +5,14 @@ public class TechnicNotes : NotesBase
     sealed protected override NotesData.NotesType notesType() => NotesData.NotesType.Technic;
 
     sealed protected override Range<float> fixHitTime() =>
-        new Range<float>(InGameDefine.TechnicNotesFixHitTime / 2, InGameDefine.TechnicNotesFixHitTime / 2);
+        new Range<float>(InGameDefine.TechnicNotesFixHitTime, InGameDefine.TechnicNotesFixHitTime);
 
     sealed protected override void initialize(float hitStartTime, float hitEndTime)
     {
-        transform.localPosition = new Vector3(horizontalPosition, 0, hitStartTime);
-        changeNotesSize(hitEndTime - hitStartTime);
+        var posZ = hitEndTime - hitStartTime;
+        var sizeZ = (hitEndTime + fixHitTime().Max) - (hitStartTime - fixHitTime().Min);
+        transform.localPosition = new Vector3(horizontalPosition, 0, hitStartTime - (posZ / 2));
+        changeNotesSize(sizeZ);
     }
 
     private void changeNotesSize(float length)
