@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InGameLoop : MonoBehaviour
+public class InGameLoop : SingletonMonoBehaviour<InGameLoop>
 {
     [SerializeField]
     private PlayerInputController playerInputController;
+
+    [SerializeField]
+    private BeatObjectSetting beatObjectSetting;
 
     [SerializeField]
     private Transform notesRoot;
@@ -20,9 +23,11 @@ public class InGameLoop : MonoBehaviour
     [SerializeField]
     private string inputDataName = "Test2";
 
-    public float time;
+    public float Time { get; private set; }
 
     private float speed => notesRoot.localScale.z;
+
+    private bool isPaused = true;
 
     // Start is called before the first frame update
     private void Start()
@@ -35,16 +40,25 @@ public class InGameLoop : MonoBehaviour
             createNotes(notesDataArr[i]);
         }
 
-        player.Initialize(new InGameSeData(), 0, 4);
+        player.Initialize(new InGameSeData(), 0, 3);
         playerInputController.Initialize(player, 0.035f, 0.032f);
+
+        beatObjectSetting.Initialize(4, 150);
+
+        SoundManager.Instance.PlayBGM(BGMSoundController.SoundName.BGM333);
     }
 
     // Update is called once per frame
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isPaused = !isPaused;
+        }
+
         addTime();
         var pos = notesRoot.localPosition;
-        pos.z = -time * speed;
+        pos.z = -Time * speed;
         notesRoot.localPosition = pos;
     }
 
@@ -84,7 +98,7 @@ public class InGameLoop : MonoBehaviour
 
         yield return weightTimer(hitStartTime);
 
-        yield return weightTimer(hitEndTime, () => onHittingToNotes(notes, data));
+        yield return weightTimer(hitEndTime, () => onHitNotes(notes, data));
 
         yield return weightTimer(hideTime);
         notes.OnHideView();
@@ -92,24 +106,37 @@ public class InGameLoop : MonoBehaviour
         yield return null;
     }
 
-    private void onHittingToNotes(INotes notes, NotesData data)
+    private bool onHitNotes(INotes notes, NotesData data)
     {
-        player.OnHitNotes(data.Type, data.LanePositionNumber);
-        notes.OnProcessing();
+        var isHit = player.OnHitNotes(data.Type, data.LanePositionNumber);
+
+        if (player.CurrentLanePositionNumber == notes.LaneNumber)
+        {
+            notes.OnProcessing(isHit);
+            return isHit;
+        }
+
+        return false;
     }
 
-    private IEnumerator weightTimer(float waitTime, Action onUpdateTime = null)
+    private IEnumerator weightTimer(float waitTime, Func<bool> onUpdateTime = null)
     {
-        for (bool isTimeOut = false; !isTimeOut;)
+
+        for (var isTimeOut = false; !isTimeOut;)
         {
-            isTimeOut = waitTime < time;
-            onUpdateTime?.Invoke();
+            isTimeOut = waitTime < Time;
+
+            if (onUpdateTime?.Invoke() ?? false)
+            {
+                isTimeOut = true;
+            }
+
             yield return null;
         }
     }
 
     private void addTime()
     {
-        time += Time.deltaTime;
+        Time = SoundManager.Instance.SoundTimeBGM();
     }
 }

@@ -40,9 +40,7 @@ public static class JsonUtilityExtension
 
     public static T[] ImportArr<T>(string dataPath, bool isStreamReader = false)
     {
-        //var path = ImportSaveLocationPath(dataPath);
-        var asset = isStreamReader ? 
-            new StreamReader(dataPath).ReadToEnd() : $"{Resources.Load<TextAsset>(dataPath)}";
+        var asset = getData(dataPath, isStreamReader);
 
         if (String.IsNullOrEmpty(asset))
         {
@@ -56,9 +54,7 @@ public static class JsonUtilityExtension
 
     public static T Import<T>(string dataPath, bool isStreamReader = false)
     {
-        //var path = ImportSaveLocationPath(dataPath);
-        var asset = isStreamReader ? 
-            new StreamReader(dataPath).ReadToEnd() : $"{Resources.Load<TextAsset>(dataPath)}";
+        var asset = getData(dataPath, isStreamReader);
 
         if (String.IsNullOrEmpty(asset))
         {
@@ -89,7 +85,18 @@ public static class JsonUtilityExtension
         writer.Close();
     }
 
-    private static string ImportSaveLocationPath(string dataPath)
+    private static string getData(string dataPath, bool isStreamReader = false)
+    {
+        if (isStreamReader)
+        {
+            return new StreamReader(dataPath).ReadToEnd();
+        }
+
+        var path = importSaveLocationPath(dataPath);
+        return $"{Resources.Load<TextAsset>(path)}";
+    }
+
+    private static string importSaveLocationPath(string dataPath)
     {
         const string Key = "Resources/";
         const string Extension = ".json";

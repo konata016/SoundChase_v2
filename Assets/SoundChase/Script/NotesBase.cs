@@ -12,7 +12,7 @@ abstract public class NotesBase : MonoBehaviour, INotes
 
     protected virtual void setupAnimation(float speed) { }
 
-    protected virtual void onHit() { }
+    protected virtual void onHit(bool isHitPlayer) { }
 
     protected virtual void onShowView() { }
 
@@ -22,6 +22,9 @@ abstract public class NotesBase : MonoBehaviour, INotes
 
     public Range<float> FixHitTime => fixHitTime();
 
+    public int LaneNumber => laneNumber;
+    private int laneNumber;
+
     public void Initialize(float hitStartTime, float hitEndTime, int laneNumber)
     {
         var fixHitStartTime = hitStartTime - fixHitTime().Min;
@@ -29,6 +32,8 @@ abstract public class NotesBase : MonoBehaviour, INotes
 
         horizontalPosition = laneNumber * InGameDefine.FixLaneSpace;
         initialize(fixHitStartTime, fixHitEndTime);
+
+        this.laneNumber = laneNumber;
     }
 
     public void SetupAnimation(float speed)
@@ -46,8 +51,8 @@ abstract public class NotesBase : MonoBehaviour, INotes
         onHideView();
     }
 
-    public void OnProcessing()
+    public void OnProcessing(bool isHitPlayer)
     {
-        onHit();
+        onHit(isHitPlayer);
     }
 }

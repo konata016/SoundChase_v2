@@ -15,7 +15,7 @@ public class FallNotes : NotesBase
     sealed protected override NotesData.NotesType notesType() => NotesData.NotesType.Fall;
 
     sealed protected override Range<float> fixHitTime() =>
-        new Range<float>(0, InGameDefine.FallNotesFixHitTime);
+        new Range<float>(-InGameDefine.FallNotesFixHitTime, InGameDefine.FallNotesFixHitTime);
 
     sealed protected override void initialize(float hitStartTime, float hitEndTime)
     {
