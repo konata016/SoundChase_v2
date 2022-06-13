@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using BgmName = BGMSoundController.SoundName;
 
 [Serializable]
 public class ScoreData
@@ -7,6 +8,7 @@ public class ScoreData
     [SerializeField]
     private string songName;
     public string SongName => songName;
+    public BgmName SongNameType =>  Utility.TryConversionStringToEnum<BgmName>(songName);
 
     [SerializeField]
     private float songLength;
@@ -36,5 +38,14 @@ public class ScoreData
         this.maxBarCount = maxBarCount;
         this.rhythm = rhythm;
         this.bpm = bpm;
+    }
+
+    public ScoreData(SoundEditor.SoundData data)
+    {
+        songName = data.Name;
+        songLength = data.EndTime;
+        maxBarCount = data.MaxBarCount;
+        rhythm = data.Rhythm;
+        bpm = data.Bpm;
     }
 }
