@@ -32,8 +32,11 @@ public class InGameLoop : SingletonMonoBehaviour<InGameLoop>
     // Start is called before the first frame update
     private void Start()
     {
-        var path = InGameDefine.NotesDataSaveLocationPath(inputDataName);
-        var notesDataArr = JsonUtilityExtension.ImportArr<NotesData>(path);
+        var notesDataPath = InGameDefine.NotesDataSaveLocationPath(inputDataName);
+        var scoreDataPath= InGameDefine.ScoreDataSaveLocationPath(inputDataName);
+
+        var notesDataArr = JsonUtilityExtension.ImportArr<NotesData>(notesDataPath);
+        var scoreData = JsonUtilityExtension.Import<ScoreData>(scoreDataPath);
 
         for (int i = 0; i < notesDataArr.Length; i++)
         {
@@ -43,9 +46,9 @@ public class InGameLoop : SingletonMonoBehaviour<InGameLoop>
         player.Initialize(new InGameSeData(), 0, 3);
         playerInputController.Initialize(player, 0.035f, 0.032f);
 
-        beatObjectSetting.Initialize(4, 150);
+        beatObjectSetting.Initialize(scoreData.Rhythm, scoreData.Bpm);
 
-        SoundManager.Instance.PlayBGM(BGMSoundController.SoundName.BGM333);
+        SoundManager.Instance.PlayBGM(scoreData.SongNameType);
     }
 
     // Update is called once per frame

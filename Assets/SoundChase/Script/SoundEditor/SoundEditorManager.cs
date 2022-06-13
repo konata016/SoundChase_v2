@@ -110,8 +110,9 @@ public class SoundEditorManager : MonoBehaviour
     private void onClickScoreDataExportButton()
     {
         Debug.Log("楽曲データの書き出し");
+        var data = new ScoreData(scoreCreation.SoundData);
         var filePath = InGameDefine.ScoreDataSaveLocationPath(exportDataName);
-        JsonUtilityExtension.Export(scoreCreation.SoundData, filePath, false);
+        JsonUtilityExtension.Export(data, filePath, false);
     }
 
     private void setDataName()
